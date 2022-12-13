@@ -15,8 +15,9 @@
     "@mui/material": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-router-dom": "^6.4.5",
     "react-scripts": "latest",
-    "rechart": "^0.0.1"
+    "recharts": "^2.2.0"
   },
   "browserslist": {
     "production": [
