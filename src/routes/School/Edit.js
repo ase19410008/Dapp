@@ -1,15 +1,9 @@
-import { Button, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-// import { useIntl } from 'react-intl'
+import { Button, TextField } from '@mui/material'
+import React from 'react'
 import { useTheme } from '@mui/material/styles'
 
-const Edit = ({ redirectTo = '/' }) => {
-  // const intl = useIntl()
-  const navigate = useNavigate()
-  const location = useLocation()
+const Edit = () => {
   const theme = useTheme()
-  const [username, setUsername] = useState('')
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -77,8 +71,7 @@ const Edit = ({ redirectTo = '/' }) => {
               label="URL"
               id=""
             />
-            <Button variant="contained" component="label"
-              style={{ margin: theme.spacing(3, 0, 2) }}>
+            <Button variant="contained" component="label">
               学校写真アップロード
               <input hidden accept="image/*" multiple type="file" />
             </Button>
@@ -88,7 +81,6 @@ const Edit = ({ redirectTo = '/' }) => {
               fullWidth
               variant="contained"
               color="primary"
-              style={{ margin: theme.spacing(3, 0, 2) }}
             >
               更新
             </Button>
