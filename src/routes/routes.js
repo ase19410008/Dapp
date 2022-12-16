@@ -3,7 +3,7 @@ import {
 } from "react-router-dom";
 
 import ErrorPage from "../error-page";
-import SignIn from "./SignIn";
+import SignIn from "./SignIn/SignIn";
 import SignUp from "./SignUp/SignUp";
 import School from "./School/index";
 import Edit from "./School/Edit";
@@ -14,13 +14,6 @@ const router = createBrowserRouter([
     path: "/",
     element: <SignIn />,
     errorElement: <ErrorPage />,
-    /*loader: rootLoader,
-    children: [
-      {
-        path: "/signup",
-        element: <SignUp />,
-      },
-    ],*/
   },
   {
     path: "/signup",
