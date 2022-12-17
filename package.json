@@ -13,10 +13,13 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "latest",
+    "firebase": "^9.15.0",
     "react": "latest",
     "react-dom": "latest",
+    "react-router": "^6.5.0",
     "react-router-dom": "^6.4.5",
     "react-scripts": "latest",
+    "reactfire": "^4.2.2",
     "recharts": "^2.2.0"
   },
   "browserslist": {

@@ -8,11 +8,17 @@ import SignUp from "./SignUp/SignUp";
 import School from "./School/index";
 import Edit from "./School/Edit";
 import DashBoard from "./DashBoard/DashBoard";
+import Home from "./Home/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <SignIn />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/home",
+    element: <Home />,
     errorElement: <ErrorPage />,
   },
   {
