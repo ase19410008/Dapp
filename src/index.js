@@ -1,20 +1,23 @@
 import { createRoot } from 'react-dom/client';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
 import React from 'react';
-import {
-  RouterProvider,
-} from "react-router-dom";
-import routes from "./routes/routes";
+
+import { FirebaseAppProvider } from 'reactfire';
+import { FirebaseComponents } from './FirebaseComponents';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
+const firebaseConfig = {
+  apiKey: "AIzaSyD9-42e2sc27GTi7aZFxQza2ZsB5D6IUJc",
+  authDomain: "react-auth-2ed3c.firebaseapp.com",
+  projectId: "react-auth-2ed3c",
+  storageBucket: "react-auth-2ed3c.appspot.com",
+  messagingSenderId: "578714896507",
+  appId: "1:578714896507:web:6ba40719f983c76b75fade"
+};
+
 root.render(
-  <ThemeProvider theme={theme}>
-    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-    <CssBaseline />
-    <RouterProvider router={routes} />
-  </ThemeProvider>,
+  <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+    <FirebaseComponents />
+  </FirebaseAppProvider>
 );

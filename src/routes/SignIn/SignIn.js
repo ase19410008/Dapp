@@ -11,18 +11,37 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { 
+  useFirestoreDocData, useFirestore, useFirebaseApp,
+  useAuth, 
+  useDatabase
+} from 'reactfire';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const database = useDatabase();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    signInWithEmailAndPassword(auth, data.get('email'), data.get('password'))
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        navigate("/home");
+      })
+      .catch((e) => {
+        const errorCode = e.code;
+        const errorMessage = e.message;
+
+        alert(errorCode + errorMessage);
+      });
   };
 
   return (

@@ -25,51 +25,46 @@ export default function PersonalForm() {
         基本情報
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-      <form
-            onSubmit={handleSubmit}
-            noValidate
-          >
-            <TextField
-              value=""
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="fullname"
-              label='氏名'
-              placeholder="佐久間　雄大"
-              name="fullname"
-              autoComplete="fullname"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="dob"
-              label='生年月日'
-              placeholder="2000/08/28"
-              id="dob"
-            />
-            <FormControl>
-              <FormLabel id="demo-row-radio-buttons-group-label">性別</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                >
-                <FormControlLabel value="female" control={<Radio />} label="女性" />
-                <FormControlLabel value="male" control={<Radio />} label="男性" />
-              </RadioGroup>
-            </FormControl>
-            <Typography>プロフィール画像</Typography>
-            <Button variant="contained" component="label">
-              アップロード
-              <input hidden accept="image/*" multiple type="file" />
-            </Button>
-          </form>
-          </Box>
+        <TextField
+          value=""
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="fullname"
+          label='氏名'
+          placeholder="佐久間　雄大"
+          name="fullname"
+          autoComplete="fullname"
+          autoFocus
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="dob"
+          label='生年月日'
+          placeholder="2000/08/28"
+          id="dob"
+        />
+        <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">性別</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+            >
+            <FormControlLabel value="female" control={<Radio />} label="女性" />
+            <FormControlLabel value="male" control={<Radio />} label="男性" />
+          </RadioGroup>
+        </FormControl>
+        <Typography>プロフィール画像</Typography>
+        <Button variant="contained" component="label">
+          アップロード
+          <input hidden accept="image/*" multiple type="file" />
+        </Button>
+      </Box>
     </React.Fragment>
   );
 }
