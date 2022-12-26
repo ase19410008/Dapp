@@ -118,7 +118,7 @@ function DashBoardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              DashBoard
+              ダッシュボード
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
