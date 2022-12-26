@@ -1,11 +1,10 @@
-import { createRoot } from 'react-dom/client';
-import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 import { FirebaseAppProvider } from 'reactfire';
 import { FirebaseComponents } from './FirebaseComponents';
 
 const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);
+const root = ReactDOM.createRoot(rootElement as HTMLElement);
 
 const firebaseConfig = {
   apiKey: "AIzaSyD9-42e2sc27GTi7aZFxQza2ZsB5D6IUJc",

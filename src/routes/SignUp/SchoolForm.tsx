@@ -19,13 +19,13 @@ export default function Review() {
   return (
     <React.Fragment>
        <div
-          className={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: `100%`,
-          }}
+          // className={{
+          //   display: 'flex',
+          //   flexDirection: 'column',
+          //   alignItems: 'center',
+          //   justifyContent: 'center',
+          //   height: `100%`,
+          // }}
         >
           <Typography component="h1" variant="h5">
             サインアップ
