@@ -25,10 +25,10 @@ export default function AccountForm() {
       }
       return form
     })
-    console.log(form);
+    // console.log(form);
     
-    console.log(formValues.email.value);
-    console.log(formValues.password.value);
+    // console.log(formValues.email.value);
+    // console.log(formValues.password.value);
     
     // Do whatever with the values
     // console.log(form.password);
