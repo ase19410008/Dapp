@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { AppContext } from '../../Context';
-import { addDoc, doc, setDoc } from '@firebase/firestore';
+import { addDoc, collection, doc, setDoc } from '@firebase/firestore';
 import { useFirestore, useUser } from 'reactfire';
 
 export default function SchoolForm() {
@@ -20,19 +20,32 @@ export default function SchoolForm() {
       form = {
         firstName,
         date,
+        gender,
         [name]: formValues[name].value
       }
       return form
     })
 
-    setDoc(doc(db, 'teachers', user!.uid as string), {
+    /*setDoc(doc(db, 'teachers', user!.uid as string), {
       school: formValues.firstName.value,
       gender: formValues.gender.value
     }, {
       merge: true
+    });*/
+
+    console.log("test");
+    const ref = doc(db, 'schools/国際情報工科自動車大学校/');
+    const ref2 = collection(ref, 'teachers');
+    console.log(ref2);
+    console.log("here");
+
+    /*addDoc(ref2, {
+      name: formValues.firstName.value
+    });*/
+    setDoc(doc(db, 'schools/国際情報工科自動車大学校/teachers', user!.uid), {
+      name: 'test'
     });
-    
-    handleNext();
+    // handleNext();
   };
 
   // Check if all values are not empty and if there are some errors
@@ -110,3 +123,5 @@ export default function SchoolForm() {
     </React.Fragment>
   );
 }
+
+// https://zenn.dev/isosa/articles/037ed47ee3dfe5
