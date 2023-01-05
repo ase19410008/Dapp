@@ -13,7 +13,7 @@ import { getAuth } from 'firebase/auth'; // Firebase v9+
 import { AuthProvider, FirestoreProvider, useFirebaseApp } from 'reactfire';
 import { ReactElement } from 'react';
 import { StepsProvider } from './Context';
-import { getFirestore } from '@firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 export function FirebaseComponents({ children }: any ): ReactElement {
   const app = useFirebaseApp(); // a parent component contains a `FirebaseAppProvider`

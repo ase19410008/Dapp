@@ -10,7 +10,7 @@ import SchoolForm from './SchoolForm'
 import { AppContext } from '../../Context'
 
 // Step titles
-const labels = ['First Step', 'Second Step', 'Confirmation']
+const labels = ['アカウント', '基本情報', '在籍情報']
 const handleSteps = (step: number) => {
   switch (step) {
     case 0:
@@ -20,7 +20,7 @@ const handleSteps = (step: number) => {
     case 2:
       return <SchoolForm />
     default:
-      throw new Error('Unknown step')
+      throw new Error('不明なステップ')
   }
 }
 
@@ -35,7 +35,7 @@ export default function SignUp() {
         <>
           <Box sx={{ my: 5 }}>
             <Typography variant='h4' align='center'>
-              Multi Step Form
+              教師用アカウント登録
             </Typography>
             <Typography variant='subtitle2' align='center' sx={{ mt: 2 }}>
               React Material UI multi step form with basic form validation logic.

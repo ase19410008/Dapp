@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function createData(name, male, female, details) {
+function createData(name: string, male: number, female: number, details:any) {
   return {
     name,
     male,
@@ -23,7 +23,7 @@ function createData(name, male, female, details) {
   };
 }
 
-function Row(props) {
+function Row(props: any) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -61,7 +61,7 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.details.map((detailRow) => (
+                  {row.details.map((detailRow: any) => (
                     <TableRow key={detailRow.grade}>
                       <TableCell component="th" scope="row">
                         {detailRow.grade}
@@ -151,5 +151,5 @@ export default function CollapsibleTable() {
         </TableBody>
       </Table>
     </TableContainer>
-  );
+    );
 }

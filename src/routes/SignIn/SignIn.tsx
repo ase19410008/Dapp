@@ -14,9 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { 
-  useFirestoreDocData, useFirestore, useFirebaseApp,
   useAuth, 
-  useDatabase
 } from 'reactfire';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -25,12 +23,11 @@ const theme = createTheme();
 export default function SignIn() {
   const auth = useAuth();
   const navigate = useNavigate();
-  const database = useDatabase();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signInWithEmailAndPassword(auth, data.get('email'), data.get('password'))
+    signInWithEmailAndPassword(auth, data.get('email') as string, data.get('password') as string)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
@@ -97,7 +94,7 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link to="#">
                   パスワードを変更
                 </Link>
               </Grid>

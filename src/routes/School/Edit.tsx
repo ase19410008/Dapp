@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles'
 const Edit = () => {
   const theme = useTheme()
 
-  function handleSubmit(event) {
+  function handleSubmit(event:any) {
     event.preventDefault()
   }
 

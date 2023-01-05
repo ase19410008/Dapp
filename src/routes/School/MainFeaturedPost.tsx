@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-function MainFeaturedPost(props) {
+function MainFeaturedPost(props: any) {
   const { post } = props;
 
   return (
