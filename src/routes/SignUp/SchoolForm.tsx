@@ -26,12 +26,12 @@ export default function SchoolForm() {
       return form
     })
 
-    /*setDoc(doc(db, 'teachers', user!.uid as string), {
+    setDoc(doc(db, 'teachers', user!.uid as string), {
       school: formValues.firstName.value,
       gender: formValues.gender.value
     }, {
       merge: true
-    });*/
+    });
 
     console.log("test");
     const ref = doc(db, 'schools/国際情報工科自動車大学校/');
@@ -43,7 +43,7 @@ export default function SchoolForm() {
       name: formValues.firstName.value
     });*/
     setDoc(doc(db, 'schools/国際情報工科自動車大学校/teachers', user!.uid), {
-      name: 'test'
+      name: formValues.firstName.value
     });
     // handleNext();
   };
