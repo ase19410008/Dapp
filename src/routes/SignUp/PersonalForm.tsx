@@ -10,7 +10,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Button from '@mui/material/Button';
 import { AppContext } from '../../Context';
 import { doc, setDoc } from '@firebase/firestore';
-import { ref, uploadBytes } from '@firebase/storage';
+import { getMetadata, ref, uploadBytes } from '@firebase/storage';
 import { useFirestore, useStorage, useUser } from 'reactfire';
 import { file } from '@babel/types';
 
@@ -52,9 +52,15 @@ export default function PersonalForm() {
 
   const fileUpload = async (e:React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
-    const storageRef = ref(storage, 'images/' + file.name);
+    console.log(file);
+    const ext = file.type.split('/')[1];
+    const storageRef = ref(storage, 'images/' + user!.uid + "." + ext);
 
     uploadBytes(storageRef, file);
+    getMetadata(storageRef).then(function (data) {
+      console.log(data);
+    });
+    
   }
 
   return (
