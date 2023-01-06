@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -10,12 +10,15 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Button from '@mui/material/Button';
 import { AppContext } from '../../Context';
 import { doc, setDoc } from '@firebase/firestore';
-import { useFirestore, useUser } from 'reactfire';
+import { ref, uploadBytes } from '@firebase/storage';
+import { useFirestore, useStorage, useUser } from 'reactfire';
+import { file } from '@babel/types';
 
 export default function PersonalForm() {
   const { formValues, handleChange, handleNext } = React.useContext(AppContext);
   const { firstName, date } = formValues;
   const { status, data: user} = useUser();
+  const storage = useStorage();
   const db = useFirestore();
 
   const handleSubmit = () => {
@@ -46,6 +49,13 @@ export default function PersonalForm() {
       ),
     [formValues, firstName, date]
   )
+
+  const fileUpload = async (e:React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    const storageRef = ref(storage, 'images/' + file.name);
+
+    uploadBytes(storageRef, file);
+  }
 
   return (
     <React.Fragment>
@@ -94,7 +104,9 @@ export default function PersonalForm() {
       <Typography>プロフィール画像</Typography>
       <Button variant="contained" component="label">
         アップロード
-        <input hidden accept="image/*" multiple type="file" />
+        <input hidden accept="image/*" type="file"
+        onChange={fileUpload}
+        />
       </Button>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
