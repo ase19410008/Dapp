@@ -19,6 +19,7 @@
     "firebase": "^9.15.0",
     "react": "latest",
     "react-dom": "latest",
+    "react-hook-form": "^7.41.5",
     "react-router": "^6.5.0",
     "react-router-dom": "^6.4.5",
     "react-scripts": "latest",

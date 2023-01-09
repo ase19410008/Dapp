@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,29 +19,42 @@ import {
   useAuth, 
 } from 'reactfire';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 const theme = createTheme();
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 export default function SignIn() {
+  const { handleSubmit, control, formState: { errors} } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: ''
+    },
+    mode: "onChange"
+  });
+
   const auth = useAuth();
   const navigate = useNavigate();
+  const [signIn, setsignIn] = React.useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    signInWithEmailAndPassword(auth, data.get('email') as string, data.get('password') as string)
+  const onSubmit: SubmitHandler<FormValues> = data => {
+    signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
         navigate("/home");
       })
       .catch((e) => {
-        const errorCode = e.code;
-        const errorMessage = e.message;
-
-        alert(errorCode + errorMessage);
+        // const errorCode = e.code;
+        // const errorMessage = e.message;
+        // alert(errorCode + errorMessage);
+        setsignIn(true);
       });
-  };
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -59,31 +74,61 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             サインイン
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="メールアドレス"
+          <Box component="form" onSubmit={(handleSubmit(onSubmit))} noValidate sx={{ mt: 1 }}>
+            {signIn && <Alert severity="error">
+              <AlertTitle>サインインに失敗しました。</AlertTitle></Alert>}
+            <Controller
               name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
+              control={control}
+              rules={{
+                required: 'メールアドレスが未入力です。',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "メールアドレスの形式ではありません"
+                }
+              }}
+              render={({ field: { onChange,
+                onBlur,
+                value,
+                name, ref },
+              fieldState: { isTouched,
+                isDirty,
+                error} }) => (<TextField value={value}
+                  fullWidth
+                  label="メールアドレス"
+                  type="email"
+                  placeholder='example@mail.com'
+                  error={!!error?.message}
+                  onChange={onChange}
+                  helperText={error?.message} />)}/>
+
+            <Controller
+              name='password'
+              control={control}
+              rules={{
+                required: 'パスワードが未入力です。',
+                minLength: {
+                  value: 4,
+                  message: 'パスワードは4文字以上です。'
+                }
+              }}
+              render={({ field, fieldState }) => (
+                <TextField
+                {...field}
               margin="normal"
-              required
               fullWidth
-              name="password"
               label="パスワード"
               type="password"
               id="password"
-              autoComplete="current-password"
+              error={!!fieldState.error?.message}
+              helperText={fieldState.error?.message}
+              autoComplete= "current-password"
             />
-            <FormControlLabel
+              )}/>
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="次回から自動サインイン"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
