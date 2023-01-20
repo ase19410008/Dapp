@@ -9,14 +9,16 @@ import {
 import { Link } from "react-router-dom";
 
 const Post = (props: React.PropsWithChildren<{
-  date: string,
+  uid: string,
+  date: Date,
   to: string,
   comment: string
 }>) => {
+  const uid = props.uid;
   const date = props.date;
   const to = props.to;
-  const comment = props.comment;
-  
+  const comment = props.comment;  
+
   return (
     <Card>
         <CardActionArea>
@@ -27,9 +29,10 @@ const Post = (props: React.PropsWithChildren<{
             </Avatar>
           }
           title={
-            <Link to="#a">{to}</Link>
+            // <Link to={`./users/${uid}`} relative="path">{to}</Link>
+            <Link to={`../users/${uid}`}>{to}</Link>
           }
-          subheader={date}
+          subheader={date.toLocaleDateString()}
         />
           <CardContent>
           {/* <Divider />

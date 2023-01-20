@@ -9,22 +9,36 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Box
 } from '@mui/material';
 import { useFirebaseApp } from 'reactfire';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Post from '../../components/Post';
 import { useState } from 'react';
+
 export default function Home() {
   const app = useFirebaseApp();
   const auth = getAuth(app);
   const navigate = useNavigate();
 
+  const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -42,51 +56,35 @@ export default function Home() {
         }}
       >
         <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tooltip title="個人の投稿">
-          <IconButton
-            // onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            // aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            // aria-expanded={open ? 'true' : undefined}
-          >
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Avatar sx={{ width: 32, height: 32 }} src="https://mui.com/static/images/avatar/2.jpg">M</Avatar>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>プロフィール</MenuItem>
-                <MenuItem onClick={handleClose}>私への投稿</MenuItem>
-                <MenuItem onClick={async () => {
-            await signOut(auth);
-            navigate('/');
-          }}>サインアウト</MenuItem>
-              </Menu>
-            </div>
-          </IconButton>
-        </Tooltip>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         <Typography
           component="h2"
           variant="h5"
@@ -97,14 +95,14 @@ export default function Home() {
         >
           投稿一覧
         </Typography>
-      </Toolbar>
+        </Toolbar>
       </AppBar>
       <Grid container rowSpacing={3}>
         <Grid item xs={12}>
-          <Post date='2022-12-1' to='佐久間雄大' comment='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi incidunt officiis voluptates consectetur corrupti doloremque ullam delectus ipsam, corporis impedit rem ad architecto temporibus nemo nostrum alias, ex minima veritatis!' />
+          <Post uid="1" date={new Date(2023,1,1)} to='佐久間雄大' comment='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi incidunt officiis voluptates consectetur corrupti doloremque ullam delectus ipsam, corporis impedit rem ad architecto temporibus nemo nostrum alias, ex minima veritatis!' />
         </Grid>
         <Grid item xs={12}>
-          <Post date='2023-01-17' to='Michel' comment='ほげ' />
+          <Post uid="2" date={new Date(2023,1,20)} to='Michel' comment='ほげ' />
         </Grid>
       </Grid>
     </>
