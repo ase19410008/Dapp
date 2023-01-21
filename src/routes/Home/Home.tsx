@@ -16,6 +16,8 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Post from '../../components/Post';
 import { useState } from 'react';
+import { collection, orderBy, query } from 'firebase/firestore';
+import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 
 export default function Home() {
   const app = useFirebaseApp();
@@ -23,6 +25,11 @@ export default function Home() {
   const navigate = useNavigate();
 
   const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+  const firestore = useFirestore();
+  const reviewsCollection = collection(firestore, 'reviews');
+  const reviewsQuery = query(reviewsCollection, orderBy('posted', 'asc'));
+  const { status, data: reviews } = useFirestoreCollectionData(reviewsQuery);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -43,6 +50,10 @@ export default function Home() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  if (status === 'loading') {
+    return <span>loading...</span>;
+  }
 
   return (
     <>
@@ -98,12 +109,17 @@ export default function Home() {
         </Toolbar>
       </AppBar>
       <Grid container rowSpacing={3}>
-        <Grid item xs={12}>
+        {reviews.map((review) => (
+          <Grid item xs={12}>
+            <Post uid="1" date={review.posted.toDate()} to={review.teacher} comment={review.comment} />
+          </Grid>
+        ))}
+        {/* <Grid item xs={12}>
           <Post uid="1" date={new Date(2023,1,1)} to='佐久間雄大' comment='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi incidunt officiis voluptates consectetur corrupti doloremque ullam delectus ipsam, corporis impedit rem ad architecto temporibus nemo nostrum alias, ex minima veritatis!' />
         </Grid>
         <Grid item xs={12}>
           <Post uid="2" date={new Date(2023,1,20)} to='Michel' comment='ほげ' />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
