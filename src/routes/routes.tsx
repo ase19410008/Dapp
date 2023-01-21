@@ -9,6 +9,7 @@ import School from "./School/index";
 import Edit from "./School/Edit";
 import DashBoard from "./DashBoard/DashBoard";
 import Home from "./Home/Home";
+import User from "./Home/User";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     path: "/home",
     element: <Home />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: 'users/:uid',
+    element: <User />,
   },
   {
     path: "/signup",
