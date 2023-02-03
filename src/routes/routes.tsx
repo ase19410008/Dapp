@@ -10,11 +10,12 @@ import Edit from "./School/Edit";
 import DashBoard from "./DashBoard/DashBoard";
 import Home from "./Home/Home";
 import User from "./Home/User";
+import App from "../App";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SignIn />,
+    element: <App />,
     errorElement: <ErrorPage />,
   },
   {
