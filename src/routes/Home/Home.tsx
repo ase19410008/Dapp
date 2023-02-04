@@ -15,28 +15,38 @@ import { useFirebaseApp } from 'reactfire';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Post from '../../components/Post';
-import { useState } from 'react';
-import { collection, orderBy, query } from 'firebase/firestore';
-import { useFirestore, useFirestoreCollectionData } from 'reactfire';
+import { useEffect, useState } from 'react';
+import { collection, DocumentData, DocumentSnapshot, getDoc, getDocs, orderBy, query, QueryDocumentSnapshot } from 'firebase/firestore';
+import { useFirestore } from 'reactfire';
 
 export default function Home() {
   const app = useFirebaseApp();
   const auth = getAuth(app);
   const navigate = useNavigate();
 
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+  const settings = ['プロフィール', 'アカウント', 'ダッシュボード', 'Logout'];
 
   const firestore = useFirestore();
-  const reviewsCollection = collection(firestore, 'reviews');
-  const reviewsQuery = query(reviewsCollection, orderBy('posted', 'asc'));
-  const { status, data: reviews } = useFirestoreCollectionData(reviewsQuery);
+  const [teachers, setTeachers] = useState<Array<DocumentSnapshot<DocumentData>>>([]);
+  const [reviews, setReviews] = useState<Array<QueryDocumentSnapshot<DocumentData>>>([]);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  async function fetchTeachers() {
+    // rev-cpコレクションの参照を引数に全ドキュメントを取得
+    const querySnapshot = await getDocs(query(collection(firestore, 'rev-cp'), orderBy("posted", "desc")));
+    querySnapshot.forEach(async (doc) => {
+      setReviews((prevState) => [...prevState, doc]);
+      
+      console.log(doc.id);
+      
+      const teacher = await getDoc(doc.get("teacherRef")) as DocumentSnapshot<DocumentData> ;
+      setTeachers((prevState) => [...prevState, teacher]);
+      // console.log(teacher);
+      // console.log(teacher.data());
+      // console.log(teacher.get("name"));
+    })
+  }
+
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -45,15 +55,10 @@ export default function Home() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  if (status === 'loading') {
-    return <span>loading...</span>;
-  }
+  
+  useEffect(() => {
+    fetchTeachers();    
+  }, [])
 
   return (
     <>
@@ -109,17 +114,15 @@ export default function Home() {
         </Toolbar>
       </AppBar>
       <Grid container rowSpacing={3}>
-        {reviews.map((review) => (
+        {reviews?.map((review, i) => (
           <Grid item xs={12}>
-            <Post uid="1" date={review.posted.toDate()} to={review.teacher} comment={review.comment} />
+            <Post key={review?.id}
+              uid={teachers[i]?.id}
+              date={review?.get("posted").toDate()}
+              to={teachers[i]?.get("name")}
+              comment={review?.get("comment")} />
           </Grid>
         ))}
-        {/* <Grid item xs={12}>
-          <Post uid="1" date={new Date(2023,1,1)} to='佐久間雄大' comment='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi incidunt officiis voluptates consectetur corrupti doloremque ullam delectus ipsam, corporis impedit rem ad architecto temporibus nemo nostrum alias, ex minima veritatis!' />
-        </Grid>
-        <Grid item xs={12}>
-          <Post uid="2" date={new Date(2023,1,20)} to='Michel' comment='ほげ' />
-        </Grid> */}
       </Grid>
     </>
   );
