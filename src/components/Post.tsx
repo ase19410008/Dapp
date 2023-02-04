@@ -26,6 +26,7 @@ const Post = (props: React.PropsWithChildren<{
           avatar={
             <Avatar aria-label="recipe">
               {/* {to.charAt(0)} */}
+              {to}
             </Avatar>
           }
           title={

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Container, Box } from '@mui/material';
-import { useFirestore } from 'reactfire';
+import { useFirestore, } from 'reactfire';
 import { collection, DocumentData, DocumentSnapshot, getDoc, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
 import Post from './components/Post';
 
@@ -22,16 +22,16 @@ export default function App() {
       
       const teacher = await getDoc(doc.get("teacherRef")) as DocumentSnapshot<DocumentData> ;
       setTeachers((prevState) => [...prevState, teacher]);
-      console.log(teacher);
-      console.log(teacher.data());
-      console.log(teacher.get("name"));
+      // console.log(teacher);
+      // console.log(teacher.data());
+      // console.log(teacher.get("name"));
     })
   }
 
   useEffect(() => {
     fetchTeachers();    
-  },[])
-
+  }, [])
+  
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
@@ -42,7 +42,7 @@ export default function App() {
             to={teachers[i]?.get("name")}
             comment={review?.get("comment")} />
         ))}
-      </Box>
+      </Box>  
     </Container>
   );
 }
