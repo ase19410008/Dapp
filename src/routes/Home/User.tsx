@@ -19,13 +19,13 @@ const User = () => {
     const q = query(collection(firestore, "rev-cp"), 
       where("teacherRef", "==", docRef),
       orderBy("posted", "desc"));
-    console.log(q);
+    // console.log(q);
 
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot);
+    // console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
       setReviews((prevState) => [...prevState, doc]);
-      console.log(doc.id, " => ", doc.data());
+      // console.log(doc.id, " => ", doc.data());
     });
   }
 
