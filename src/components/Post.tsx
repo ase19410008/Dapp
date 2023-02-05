@@ -1,4 +1,4 @@
-import {
+uimport {
   Typography,
   Card,
   CardHeader,
@@ -25,7 +25,6 @@ const Post = (props: React.PropsWithChildren<{
           <CardHeader
           avatar={
             <Avatar aria-label="recipe">
-              {/* {to.charAt(0)} */}
               {to}
             </Avatar>
           }

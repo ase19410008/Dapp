@@ -42,7 +42,7 @@ export default function App() {
             to={teachers[i]?.get("name")}
             comment={review?.get("comment")} />
         ))}
-      </Box>  
+      </Box>
     </Container>
   );
 }
