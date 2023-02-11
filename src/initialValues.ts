@@ -59,4 +59,30 @@ export const initialValues: ValidationSchema = {
     required: true,
     validate: 'text'
   },
+  school: {
+    value: '',
+    error: '',
+    required: true,
+    validate: 'text',
+    helperText: '学校名を入れてください。'
+  },
+  years: {
+    value: '',
+    error: '',
+    required: true,
+    validate: 'number',
+    helperText: '勤続年数を入れてください。'
+  },
+  subject: {
+    value: '',
+    error: '',
+    required: true,
+    validate: 'text',
+    helperText: '教科名を入れてください。'
+  },
+  position: {
+    value: '',
+    error: '',
+    validate: 'select'
+  },
 }

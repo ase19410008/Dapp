@@ -9,7 +9,7 @@ import { useFirestore, useUser } from 'reactfire';
 
 export default function SchoolForm() {
   const { formValues, handleChange, handleNext } = React.useContext(AppContext);
-  const { firstName, date, gender } = formValues;
+  const { school, subject, years, position } = formValues;
   const { status, data: user} = useUser();
   const db = useFirestore();
 
@@ -18,17 +18,20 @@ export default function SchoolForm() {
 
     Object.keys(formValues).map((name) => {
       form = {
-        firstName,
-        date,
-        gender,
+        school,
+        years,
+        subject,
+        position,
         [name]: formValues[name].value
       }
       return form
     })
 
     setDoc(doc(db, 'teachers', user!.uid as string), {
-      school: formValues.firstName.value,
-      gender: formValues.gender.value
+      school: formValues.school.value,
+      years: formValues.years.value,
+      subject: formValues.subject.value,
+      position: formValues.position.value,
     }, {
       merge: true
     });
@@ -51,10 +54,10 @@ export default function SchoolForm() {
   // Check if all values are not empty and if there are some errors
   const isError = useCallback(
     () =>
-      Object.keys({ firstName, date, gender }).some(
+      Object.keys({ school, years, subject, position }).some(
         (name) => (formValues[name].required && !formValues[name].value) || formValues[name].error
       ),
-    [formValues, firstName, date, gender]
+    [formValues, school, years, subject, position]
   )
 
   return (
@@ -67,12 +70,12 @@ export default function SchoolForm() {
         margin="normal"
         required
         fullWidth
-        id="firstName"
+        id="school"
         label='学校名'
         placeholder="FSG"
-        name="firstName"
-        value={firstName.value}
-        error={!!firstName.error}
+        name="school"
+        value={school.value}
+        error={!!school.error}
         autoComplete="firstName"
         autoFocus
         onChange={handleChange}
@@ -82,13 +85,13 @@ export default function SchoolForm() {
         margin="normal"
         required
         fullWidth
-        name="date"
+        name="subject"
         label='教科'
-        placeholder="2000/08/28"
-        id="date"
+        placeholder="国語"
+        id="subject"
         onChange={handleChange}
-        value={date.value}
-        error={!!date.error}
+        value={subject.value}
+        error={!!subject.error}
       />
       <TextField
         fullWidth
@@ -97,12 +100,12 @@ export default function SchoolForm() {
           native: true
         }}
         label="Gender"
-        name="gender"
-        value={gender.value}
+        name="position"
+        value={position.value}
         onChange={handleChange}
-        error={!!gender.error}
-        helperText={gender.error}
-        required={gender.required}
+        error={!!position.error}
+        helperText={position.error}
+        required={position.required}
       >
         <option value=""> </option>
         <option value="A">担任</option>

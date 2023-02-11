@@ -3,7 +3,13 @@ import { collection, doc, DocumentData, getDoc, getDocs, orderBy, query, QueryDo
 import { useParams } from 'react-router-dom'
 import { useFirestore } from 'reactfire';
 import Post from '../../components/Post';
-import { AppBar, Grid, Toolbar, Typography } from '@mui/material';
+import Profile from '../../components/Profile';
+import { AppBar, Grid, Toolbar, Typography,
+Card,
+Box,
+Avatar,
+Divider,
+Stack,} from '@mui/material';
 
 const User = () => {
   const firestore = useFirestore();
@@ -12,6 +18,10 @@ const User = () => {
 
   const [reviews, setReviews] = useState<Array<QueryDocumentSnapshot<DocumentData>>>([]);
   const [user, setUser] = useState("");
+
+  const [school, setschool] = useState("FSG高等部")
+  const [year, setYear] = useState(10);
+  const [subject, setsubject] = useState("国語")
 
   async function fetchReviews() {
     setUser(await (await getDoc(docRef)).get("name"));
@@ -57,7 +67,31 @@ const User = () => {
         </Typography>
         </Toolbar>
       </AppBar>
-      <Grid container rowSpacing={3}>
+      {/* <Card>
+        <Box sx={{ p: 2, display: 'flex' }}>
+          <Avatar variant="rounded" src="https://mui.com/static/images/avatar/1.jpg" />
+          <Stack spacing={0.5}>
+            <Typography fontWeight={700}>{user}</Typography>
+            <Typography variant="body2" color="text.secondary">{school}</Typography>
+          </Stack>
+        </Box>
+        <Divider />
+          <Stack
+            direction="row"
+            alignItems="center"
+            // justifyContent="space-between"
+            justifyContent="center"
+            spacing={8}
+            // sx={{ px: 2, py: 1, bgcolor: 'background.default' }}
+          >
+            <Typography fontWeight={300}>勤続年数 {year}</Typography>
+            <Typography fontWeight={300}>担当教科 {subject}</Typography>
+          </Stack>
+      </Card> */}
+      <Grid container rowSpacing={3}
+        justifyContent="center"
+        alignItems="center">
+        <Profile />
         {reviews?.map((review, i) => (
           <Grid item xs={12}>
             <Post key={review?.id + `No{i}`}
