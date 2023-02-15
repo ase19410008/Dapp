@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import { collection, doc, DocumentData, getDoc, getDocs, orderBy, query, QueryDocumentSnapshot, where } from 'firebase/firestore';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useFirestore } from 'reactfire';
 import Post from '../../components/Post';
 import Profile from '../../components/Profile';
-import { AppBar, Grid, Toolbar, Typography,
-Card,
-Box,
-Avatar,
-Divider,
-Stack,} from '@mui/material';
+import { AppBar, Grid, Toolbar, Typography, IconButton, Tooltip} from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const User = () => {
   const firestore = useFirestore();
   let { uid } = useParams();
+  const isNest = uid === undefined;
   const docRef = doc(firestore, "teachers", uid as string);
 
   const [reviews, setReviews] = useState<Array<QueryDocumentSnapshot<DocumentData>>>([]);
@@ -22,6 +19,8 @@ const User = () => {
   const [school, setschool] = useState("FSG高等部")
   const [year, setYear] = useState(10);
   const [subject, setsubject] = useState("国語")
+
+  const navigate = useNavigate();
 
   async function fetchReviews() {
     setUser(await (await getDoc(docRef)).get("name"));
@@ -36,6 +35,8 @@ const User = () => {
     querySnapshot.forEach((doc) => {
       setReviews((prevState) => [...prevState, doc]);
       // console.log(doc.id, " => ", doc.data());
+      console.log(doc.data());
+      
     });
   }
 
@@ -55,6 +56,18 @@ const User = () => {
         }}
       >
         <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tooltip title="タイムラインに戻る">
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={() => navigate('/home')}
+          >
+            <ChevronLeftIcon />
+          </IconButton>
+        </Tooltip>
         <Typography
           component="h2"
           variant="h5"
@@ -67,27 +80,6 @@ const User = () => {
         </Typography>
         </Toolbar>
       </AppBar>
-      {/* <Card>
-        <Box sx={{ p: 2, display: 'flex' }}>
-          <Avatar variant="rounded" src="https://mui.com/static/images/avatar/1.jpg" />
-          <Stack spacing={0.5}>
-            <Typography fontWeight={700}>{user}</Typography>
-            <Typography variant="body2" color="text.secondary">{school}</Typography>
-          </Stack>
-        </Box>
-        <Divider />
-          <Stack
-            direction="row"
-            alignItems="center"
-            // justifyContent="space-between"
-            justifyContent="center"
-            spacing={8}
-            // sx={{ px: 2, py: 1, bgcolor: 'background.default' }}
-          >
-            <Typography fontWeight={300}>勤続年数 {year}</Typography>
-            <Typography fontWeight={300}>担当教科 {subject}</Typography>
-          </Stack>
-      </Card> */}
       <Grid container rowSpacing={3}
         justifyContent="center"
         alignItems="center">
@@ -97,8 +89,9 @@ const User = () => {
             <Post key={review?.id + `No{i}`}
               uid={review?.id}
               date={review?.get("posted").toDate()}
-              to={review?.get("name")}
-              comment={review?.get("comment")} />
+              to={review?.get("from")}
+              comment={review?.get("comment")}
+              isNest={isNest} />
           </Grid>
         ))}
       </Grid>

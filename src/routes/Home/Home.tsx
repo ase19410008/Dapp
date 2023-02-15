@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useFirebaseApp } from 'reactfire';
 import { getAuth, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Post from '../../components/Post';
 import { useEffect, useState } from 'react';
 import { collection, DocumentData, DocumentSnapshot, getDoc, getDocs, orderBy, query, QueryDocumentSnapshot } from 'firebase/firestore';
@@ -23,6 +23,9 @@ export default function Home() {
   const app = useFirebaseApp();
   const auth = getAuth(app);
   const navigate = useNavigate();
+
+  const { param } = useParams();
+  const isNest = param === undefined;
 
   const settings = ['プロフィール', 'アカウント', 'ダッシュボード', 'Logout'];
 
@@ -73,7 +76,7 @@ export default function Home() {
       >
         <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="設定を開く">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
@@ -116,11 +119,12 @@ export default function Home() {
       <Grid container rowSpacing={3}>
         {reviews?.map((review, i) => (
           <Grid item xs={12}>
-            <Post key={review?.id}
+            <Post key={review?.id + `No{i}`}
               uid={teachers[i]?.id}
               date={review?.get("posted").toDate()}
               to={teachers[i]?.get("name")}
-              comment={review?.get("comment")} />
+              comment={review?.get("comment")}
+              isNest={isNest} />
           </Grid>
         ))}
       </Grid>

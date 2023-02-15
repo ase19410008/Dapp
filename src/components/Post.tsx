@@ -12,42 +12,40 @@ const Post = (props: React.PropsWithChildren<{
   uid: string,
   date: Date,
   to: string,
-  comment: string
+  comment: string,
+  isNest: boolean
 }>) => {
   const uid = props.uid;
   const date = props.date;
   const to = props.to;
-  const comment = props.comment;  
+  const comment = props.comment;
+  const isNest = props.isNest;
+
+  console.log(`to ${to}`);
+
+  const hoge = (
+    <>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe">
+            {to}
+          </Avatar>
+        }
+        title={
+          isNest ? <Link to={`../users/${uid}`}>{to}</Link>
+            : <Typography variant="body1">{to}</Typography>
+        }
+        subheader={date.toLocaleDateString()}
+      />
+        <CardContent>
+        <Typography variant="body2">{comment}</Typography>
+        </CardContent>
+    </>
+  );
 
   return (
     <Card>
-        <CardActionArea>
-          <CardHeader
-          avatar={
-            <Avatar aria-label="recipe">
-              {to}
-            </Avatar>
-          }
-          title={
-            // <Link to={`./users/${uid}`} relative="path">{to}</Link>
-            <Link to={`../users/${uid}`}>{to}</Link>
-          }
-          subheader={date.toLocaleDateString()}
-        />
-          <CardContent>
-          {/* <Divider />
-          <Typography>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum sunt harum debitis aperiam nisi velit culpa fugiat cumque deleniti assumenda, beatae nesciunt aut nostrum sint nihil quas pariatur optio placeat.</Typography> */}
-          {/* <Stack
-    direction="row"
-    alignItems="center"
-    justifyContent="space-between"
-    sx={{ px: 2, py: 1, bgcolor: 'background.default' }}
-  >
-    <Typography>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus illo dicta necessitatibus veniam itaque nihil ipsum, quisquam voluptas alias? Ullam, temporibus modi non tempore qui reprehenderit natus itaque quo nostrum!</Typography>
-  </Stack> */}
-  <Typography variant="body2">{comment}</Typography>
-          </CardContent>
-        </CardActionArea>
+      {isNest ? <CardActionArea href={`../users/${uid}`}>{hoge}</CardActionArea> : hoge}
 </Card>
   )
 }

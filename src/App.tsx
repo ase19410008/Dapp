@@ -40,7 +40,8 @@ export default function App() {
             uid={teachers[i]?.id}
             date={review?.get("posted").toDate()}
             to={teachers[i]?.get("name")}
-            comment={review?.get("comment")} />
+            comment={review?.get("comment")}
+            isNest={false} />
         ))}
       </Box>
     </Container>
