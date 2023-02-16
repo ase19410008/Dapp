@@ -37,9 +37,6 @@ export default function SignUp() {
             <Typography variant='h4' align='center'>
               教師用アカウント登録
             </Typography>
-            <Typography variant='subtitle2' align='center' sx={{ mt: 2 }}>
-              React Material UI multi step form with basic form validation logic.
-            </Typography>
           </Box>
           <Stepper activeStep={activeStep} sx={{ py: 3 }} alternativeLabel>
             {labels.map((label) => (

@@ -27,7 +27,7 @@ export default function Home() {
   const { param } = useParams();
   const isNest = param === undefined;
 
-  const settings = ['プロフィール', 'アカウント', 'ダッシュボード', 'Logout'];
+  const settings = ['プロフィール', 'アカウント', 'ダッシュボード', 'サインアウト'];
 
   const firestore = useFirestore();
   const [teachers, setTeachers] = useState<Array<DocumentSnapshot<DocumentData>>>([]);

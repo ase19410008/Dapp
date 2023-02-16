@@ -99,7 +99,7 @@ export default function SchoolForm() {
         SelectProps={{
           native: true
         }}
-        label="Gender"
+        label="職位"
         name="position"
         value={position.value}
         onChange={handleChange}
