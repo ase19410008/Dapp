@@ -1,5 +1,5 @@
 import {
-  createBrowserRouter,
+  createBrowserRouter, Navigate,
 } from "react-router-dom";
 
 import ErrorPage from "../error-page";
@@ -11,6 +11,10 @@ import DashBoard from "./DashBoard/DashBoard";
 import Home from "./Home/Home";
 import User from "./Home/User";
 import App from "../App";
+import Orders from "./DashBoard/Orders";
+import Customers from "./DashBoard/Customers";
+import Reports from "./DashBoard/Reports";
+import Hoge from "./DashBoard/Hoge";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +46,20 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashBoard />,
+    children: [
+      {
+        path: "orders",
+        element: <Orders />,
+      },
+      {
+        path: "customers",
+        element: <Customers />,
+      },
+      {
+        path: "reports",
+        element: <Reports />,
+      }
+    ]
   },
 ]);
 
