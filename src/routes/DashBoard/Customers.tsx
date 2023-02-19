@@ -37,7 +37,7 @@ const data = [
   {
     name: "60代",
     男性: 4,
-    女性: 1,
+  女性: 1,
     amt: 2181
   },
 ];
@@ -45,7 +45,7 @@ const data = [
 export default function Customers() {
   return (
     <>
-      <Typography> 年代別教師分類</Typography>
+      <Typography> 年代別教師人数</Typography>
       <BarChart
         width={500}
         height={300}
@@ -62,8 +62,8 @@ export default function Customers() {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="男性" stackId="a" fill="#8884d8" />
-        <Bar dataKey="女性" stackId="a" fill="#82ca9d" />
+        <Bar dataKey="男性" stackId="a" fill="#82ca9d" />
+        <Bar dataKey="女性" stackId="a" fill="#8884d8" />
       </BarChart>
     </>
   );

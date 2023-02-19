@@ -17,13 +17,13 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="ダッシュボード" />
     </ListItemButton>
     <ListItemButton component={Link} to="orders">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="成績" />
+      <ListItemText primary="教科" />
     </ListItemButton>
     <ListItemButton component={Link} to="customers">
       <ListItemIcon>
@@ -35,13 +35,7 @@ export const mainListItems = (
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="レビュー" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="レビュー推移" />
     </ListItemButton>
   </>
 );

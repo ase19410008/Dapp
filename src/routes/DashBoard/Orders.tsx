@@ -12,32 +12,27 @@ import {
 const data = [
   {
     subject: "数学",
-    A: 120,
-    B: 110,
+    A: 5,
     fullMark: 150
   },
   {
     subject: "国語",
-    A: 98,
-    B: 130,
+    A: 1,
     fullMark: 150
   },
   {
     subject: "英語",
-    A: 86,
-    B: 130,
+    A: 2,
     fullMark: 150
   },
   {
     subject: "物理",
-    A: 85,
-    B: 90,
+    A: 3,
     fullMark: 150
   },
   {
     subject: "歴史",
-    A: 65,
-    B: 85,
+    A: 6,
     fullMark: 150
   }
 ];
@@ -45,7 +40,7 @@ const data = [
 export default function Orders() {
   return (
     <React.Fragment>
-      <Title>成績</Title>
+      <Title>教科ごとのレビュー内訳</Title>
       <RadarChart
       cx={300}
       cy={250}

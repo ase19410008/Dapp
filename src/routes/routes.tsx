@@ -14,7 +14,7 @@ import App from "../App";
 import Orders from "./DashBoard/Orders";
 import Customers from "./DashBoard/Customers";
 import Reports from "./DashBoard/Reports";
-import Hoge from "./DashBoard/Hoge";
+import Index from "./DashBoard/Index";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +47,7 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashBoard />,
     children: [
+      { index: true, element: <Index /> },
       {
         path: "orders",
         element: <Orders />,
