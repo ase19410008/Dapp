@@ -42,18 +42,19 @@ export default function SignIn() {
   const [signIn, setsignIn] = React.useState(false);
 
   const onSubmit: SubmitHandler<FormValues> = data => {
-    signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        navigate("/home");
-      })
-      .catch((e) => {
-        // const errorCode = e.code;
-        // const errorMessage = e.message;
-        // alert(errorCode + errorMessage);
-        setsignIn(true);
-      });
+    // signInWithEmailAndPassword(auth, data.email, data.password)
+    //   .then((userCredential) => {
+    //     const user = userCredential.user;
+    //     // console.log(user);
+    //     navigate("/home");
+    //   })
+    //   .catch((e) => {
+    //     // const errorCode = e.code;
+    //     // const errorMessage = e.message;
+    //     // alert(errorCode + errorMessage);
+    //     setsignIn(true);
+    //   });
+    navigate('home')
   }
 
   return (

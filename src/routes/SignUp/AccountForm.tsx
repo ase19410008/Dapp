@@ -9,7 +9,7 @@ import { useAuth } from 'reactfire';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function AccountForm() {
-  const { formValues, handleChange, handleNext, variant, margin } = useContext(AppContext)
+  const { formValues, handleChange, handleNext } = useContext(AppContext)
   const { email, password } = formValues
   
   const auth = useAuth();
@@ -19,8 +19,8 @@ export default function AccountForm() {
 
     Object.keys(formValues).map((name) => {
       form = {
-        // email,
-        // password,
+        email,
+        password,
         [name]: formValues[name].value
       }
       return form
@@ -32,11 +32,11 @@ export default function AccountForm() {
     
     // Do whatever with the values
     // console.log(form.password);
-    createUserWithEmailAndPassword(auth, formValues.email.value, formValues.password.value)
+    /*createUserWithEmailAndPassword(auth, formValues.email.value, formValues.password.value)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
-        user.uid
+        // console.log(user);
+        // user.uid
       })
       .catch((e) => {
         const errorCode = e.code;
@@ -44,7 +44,7 @@ export default function AccountForm() {
 
         alert(errorCode + errorMessage);
       });
-    
+    */
     // Show last component or success message
     handleNext()
   }
@@ -107,7 +107,7 @@ export default function AccountForm() {
           color='primary'
           onClick={!isError() ? handleSubmit : () => null}
         >
-          Next
+          次へ
         </Button>
       </Box>
     </>

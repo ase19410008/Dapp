@@ -5,7 +5,6 @@ export const initialValues: ValidationSchema = {
     value: '',
     error: '',
     required: true,
-    validate: 'text',
     minLength: 2,
     maxLength: 20,
     helperText: 'Custom error message'
@@ -33,6 +32,10 @@ export const initialValues: ValidationSchema = {
     value: '',
     error: ''
   },
+  dob: {
+    value: '',
+    error: ''
+  },
   city: {
     value: '',
     error: '',
@@ -57,13 +60,11 @@ export const initialValues: ValidationSchema = {
     value: '',
     error: '',
     required: true,
-    validate: 'text'
   },
   school: {
     value: '',
     error: '',
     required: true,
-    validate: 'text',
     helperText: '学校名を入れてください。'
   },
   years: {
@@ -77,12 +78,12 @@ export const initialValues: ValidationSchema = {
     value: '',
     error: '',
     required: true,
-    validate: 'text',
     helperText: '教科名を入れてください。'
   },
   position: {
     value: '',
     error: '',
-    validate: 'select'
+    validate: 'select',
+    required: true,
   },
 }

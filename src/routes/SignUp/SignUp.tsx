@@ -8,6 +8,7 @@ import AccountForm from './AccountForm'
 import PersonalForm from './PersonalForm'
 import SchoolForm from './SchoolForm'
 import { AppContext } from '../../Context'
+import Home from '../Home/Home'
 
 // Step titles
 const labels = ['アカウント', '基本情報', '在籍情報']
@@ -30,7 +31,7 @@ export default function SignUp() {
   return (
     <>
       {activeStep === labels.length ? (
-        <AccountForm />
+        <Home />
       ) : (
         <>
           <Box sx={{ my: 5 }}>

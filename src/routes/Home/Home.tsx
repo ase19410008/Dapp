@@ -18,6 +18,7 @@ import Post from '../../components/Post';
 import { useEffect, useState } from 'react';
 import { collection, DocumentData, DocumentSnapshot, getDoc, getDocs, orderBy, query, QueryDocumentSnapshot } from 'firebase/firestore';
 import { useFirestore } from 'reactfire';
+import Dashboard from '../DashBoard/DashBoard';
 
 export default function Home() {
   const app = useFirebaseApp();
@@ -27,7 +28,8 @@ export default function Home() {
   const { param } = useParams();
   const isNest = param === undefined;
 
-  const settings = ['プロフィール', 'アカウント', 'ダッシュボード', 'サインアウト'];
+  // const settings = ['プロフィール', 'アカウント', 'ダッシュボード', 'サインアウト'];
+  const settings = ['サインアウト'];
 
   const firestore = useFirestore();
   const [teachers, setTeachers] = useState<Array<DocumentSnapshot<DocumentData>>>([]);
@@ -35,11 +37,11 @@ export default function Home() {
 
   async function fetchTeachers() {
     // rev-cpコレクションの参照を引数に全ドキュメントを取得
-    const querySnapshot = await getDocs(query(collection(firestore, 'rev-cp'), orderBy("posted", "desc")));
+    const querySnapshot = await getDocs(query(collection(firestore, 'reviews'), orderBy("posted", "desc")));
     querySnapshot.forEach(async (doc) => {
       setReviews((prevState) => [...prevState, doc]);
       
-      console.log(doc.id);
+      // console.log(doc.id);
       
       const teacher = await getDoc(doc.get("teacherRef")) as DocumentSnapshot<DocumentData> ;
       setTeachers((prevState) => [...prevState, teacher]);
@@ -57,6 +59,10 @@ export default function Home() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleUserMenu = () => {
+    navigate("../")
   };
   
   useEffect(() => {
@@ -78,7 +84,7 @@ export default function Home() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="設定を開く">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="佐久間　雄大" src="https://mui.com/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -97,23 +103,24 @@ export default function Home() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting, i) => (
+                <MenuItem key={setting} onClick={handleUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          sx={{ flex: 1 }}
-        >
-          投稿一覧
-        </Typography>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            sx={{ flex: 1 }}
+          >
+            投稿一覧
+          </Typography>
+          <Button color="inherit" onClick={() => navigate("../dashboard")}>人事部向け　ダッシュボード</Button>
         </Toolbar>
       </AppBar>
       <Grid container rowSpacing={3}>

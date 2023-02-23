@@ -21,7 +21,7 @@ const Post = (props: React.PropsWithChildren<{
   const comment = props.comment;
   const isNest = props.isNest;
 
-  console.log(`to ${to}`);
+  // console.log(`to ${to}`);
 
   const hoge = (
     <>
@@ -32,21 +32,26 @@ const Post = (props: React.PropsWithChildren<{
           </Avatar>
         }
         title={
-          isNest ? <Link to={`../users/${uid}`}>{to}</Link>
+          isNest ?
+            <Link to={`../users/${uid}`}>{to}</Link>
             : <Typography variant="body1">{to}</Typography>
         }
         subheader={date.toLocaleDateString()}
       />
         <CardContent>
-        <Typography variant="body2">{comment}</Typography>
+          <Typography variant="body2">{comment}</Typography>
         </CardContent>
     </>
   );
 
   return (
     <Card>
-      {isNest ? <CardActionArea href={`../users/${uid}`}>{hoge}</CardActionArea> : hoge}
-</Card>
+      {isNest ? 
+        <CardActionArea href={`../users/${uid}`}>
+          {hoge}
+        </CardActionArea> 
+        : hoge}
+    </Card>
   )
 }
 

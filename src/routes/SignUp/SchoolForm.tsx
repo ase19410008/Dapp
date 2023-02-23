@@ -8,7 +8,7 @@ import { addDoc, collection, doc, setDoc } from '@firebase/firestore';
 import { useFirestore, useUser } from 'reactfire';
 
 export default function SchoolForm() {
-  const { formValues, handleChange, handleNext } = React.useContext(AppContext);
+  const { formValues, handleChange, handleNext, handleBack} = React.useContext(AppContext);
   const { school, subject, years, position } = formValues;
   const { status, data: user} = useUser();
   const db = useFirestore();
@@ -27,28 +27,28 @@ export default function SchoolForm() {
       return form
     })
 
-    setDoc(doc(db, 'teachers', user!.uid as string), {
-      school: formValues.school.value,
-      years: formValues.years.value,
+    /*setDoc(doc(db, 'teacher', user!.uid as string), {
+      schoolRef: formValues.school.value,
+      workYr: formValues.years.value,
       subject: formValues.subject.value,
       position: formValues.position.value,
     }, {
       merge: true
-    });
+    });*/
 
-    console.log("test");
-    const ref = doc(db, 'schools/国際情報工科自動車大学校/');
-    const ref2 = collection(ref, 'teachers');
-    console.log(ref2);
-    console.log("here");
+    // console.log("test");
+    // const ref = doc(db, 'school/国際情報工科自動車大学校/');
+    // const ref2 = collection(ref, 'teacher');
+    // console.log(ref2);
+    // console.log("here");
 
     /*addDoc(ref2, {
       name: formValues.firstName.value
     });*/
-    setDoc(doc(db, 'schools/国際情報工科自動車大学校/teachers', user!.uid), {
-      name: formValues.firstName.value
-    });
-    // handleNext();
+    // setDoc(doc(db, 'school/国際情報工科自動車大学校/teachers', user!.uid), {
+    //   name: formValues.firstName.value
+    // });
+    handleNext();
   };
 
   // Check if all values are not empty and if there are some errors
@@ -105,14 +105,33 @@ export default function SchoolForm() {
         onChange={handleChange}
         error={!!position.error}
         helperText={position.error}
-        required={position.required}
+        required={true}
       >
-        <option value=""> </option>
-        <option value="A">担任</option>
-        <option value="B">学年主任</option>
+        <option value="担任">担任</option>
+        <option value="学年主任">学年主任</option>
           </TextField>
-
+        <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        name="years"
+        label='勤続年数'
+        id="years"
+        onChange={handleChange}
+        value={years.value}
+        error={!!years.error}
+      />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Button
+          variant='contained'
+          sx={{ mt: 3, ml: 1 }}
+          disabled={isError()}
+          color='primary'
+          onClick={handleBack}
+        >
+          戻る
+        </Button>
         <Button
           variant='contained'
           sx={{ mt: 3, ml: 1 }}
@@ -120,7 +139,7 @@ export default function SchoolForm() {
           color='primary'
           onClick={!isError() ? handleSubmit : () => null}
         >
-          Next
+          次へ
         </Button>
       </Box>
     </React.Fragment>

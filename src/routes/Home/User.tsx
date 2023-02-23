@@ -11,21 +11,35 @@ const User = () => {
   const firestore = useFirestore();
   let { uid } = useParams();
   const isNest = uid === undefined;
-  const docRef = doc(firestore, "teachers", uid as string);
+  const docRef = doc(firestore, "teacher", uid as string);
 
   const [reviews, setReviews] = useState<Array<QueryDocumentSnapshot<DocumentData>>>([]);
   const [user, setUser] = useState("");
 
-  const [school, setschool] = useState("FSG高等部")
-  const [year, setYear] = useState(10);
-  const [subject, setsubject] = useState("国語")
+  const [school, setSchool] = useState("FSG高等部")
+  const [workYr, setWorkYr] = useState(10);
+  const [subject, setSubject] = useState("国語")
 
   const navigate = useNavigate();
 
   async function fetchReviews() {
-    setUser(await (await getDoc(docRef)).get("name"));
+    // setUser(await (await getDoc(docRef)).get("name"));
+    const docSnap = await getDoc(docRef);
+    setUser(await docSnap.get("name"));
 
-    const q = query(collection(firestore, "rev-cp"), 
+    setSchool(await (await getDoc(docSnap.get("schoolRef"))).get("schoole_name"))
+    setWorkYr(await docSnap.get("workYr"))
+    setSubject(await docSnap.get("subject"))
+
+    // console.log(user);
+    
+    // console.log(docRef);
+    
+    // console.log(school);
+    // console.log(workYr);
+    // console.log(subject);
+
+    const q = query(collection(firestore, "reviews"), 
       where("teacherRef", "==", docRef),
       orderBy("posted", "desc"));
     // console.log(q);
@@ -83,7 +97,11 @@ const User = () => {
       <Grid container rowSpacing={3}
         justifyContent="center"
         alignItems="center">
-        <Profile />
+        <Profile 
+          name={user}
+          school={school}
+          subject={subject}
+          workYr={workYr} />
         {reviews?.map((review, i) => (
           <Grid item xs={12}>
             <Post key={review?.id + `No{i}`}
