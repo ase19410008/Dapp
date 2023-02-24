@@ -42,18 +42,6 @@ export default function SignIn() {
   const [signIn, setsignIn] = React.useState(false);
 
   const onSubmit: SubmitHandler<FormValues> = data => {
-    // signInWithEmailAndPassword(auth, data.email, data.password)
-    //   .then((userCredential) => {
-    //     const user = userCredential.user;
-    //     // console.log(user);
-    //     navigate("/home");
-    //   })
-    //   .catch((e) => {
-    //     // const errorCode = e.code;
-    //     // const errorMessage = e.message;
-    //     // alert(errorCode + errorMessage);
-    //     setsignIn(true);
-    //   });
     navigate('home')
   }
 
@@ -126,10 +114,6 @@ export default function SignIn() {
               autoComplete= "current-password"
             />
               )}/>
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="次回から自動サインイン"
-            /> */}
             <Button
               type="submit"
               fullWidth

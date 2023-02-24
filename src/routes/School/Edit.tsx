@@ -1,9 +1,10 @@
 import { Button, TextField } from '@mui/material'
-import React from 'react'
 import { useTheme } from '@mui/material/styles'
+import { useNavigate } from 'react-router-dom';
 
 const Edit = () => {
   const theme = useTheme()
+  const navigate = useNavigate();
 
   function handleSubmit(event:any) {
     event.preventDefault()
@@ -81,6 +82,7 @@ const Edit = () => {
               fullWidth
               variant="contained"
               color="primary"
+              onClick={() => navigate("../school")}
             >
               更新
             </Button>

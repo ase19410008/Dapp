@@ -1,17 +1,97 @@
 import React, { useCallback, useContext } from 'react'
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import {Typography,
+  Box,
+  TextField,
+  Button,
+  MenuItem } from '@mui/material';
+// import Box from '@mui/material/Box';
+// import TextField from '@mui/material/TextField';
+// import Button from '@mui/material/Button';
 import { AppContext } from '../../Context';
-import { addDoc, collection, doc, setDoc } from '@firebase/firestore';
+// import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { useFirestore, useUser } from 'reactfire';
+
+const schools = [
+  {
+    value: '学校法人朴沢学園仙台大学附属明成高等学校',
+    label: '学校法人朴沢学園仙台大学附属明成高等学校',
+  },
+  {
+    value: '東北学院中学校・高等学校',
+    label: '東北学院中学校・高等学校',
+  },
+  {
+    value: '宮城学院中学校高等学校',
+    label: '宮城学院中学校高等学校',
+  },
+  {
+    value: '仙台城南高等学校',
+    label: '仙台城南高等学校',
+  },
+  {
+    value: '聖ドミニコ学院高等学校',
+    label: '聖ドミニコ学院高等学校',
+  },
+  {
+    value: '学校法人南光学園東北高等学校',
+    label: '学校法人南光学園東北高等学校',
+  },
+  {
+    value: '仙台育英学園高等学校',
+    label: '仙台育英学園高等学校',
+  },
+  {
+    value: '学校法人三島学園東北生活文化大学高等学校',
+    label: '学校法人三島学園東北生活文化大学高等学校',
+  },
+  {
+    value: '聖和学園高等学校',
+    label: '聖和学園高等学校',
+  },
+  {
+    value: '仙台白百合学園高等学校',
+    label: '仙台白百合学園高等学校',
+  },
+  {
+    value: '常盤木学園高等学校',
+    label: '常盤木学園高等学校',
+  },
+  {
+    value: '東北学院榴ケ岡高等学校',
+    label: '東北学院榴ケ岡高等学校',
+  },
+  {
+    value: '尚絅学院高等学校',
+    label: '尚絅学院高等学校',
+  },
+];
+
+const subjects = [
+  {
+    value: '国語',
+    label: '国語',
+  },
+  {
+    value: '数学',
+    label: '数学',
+  },
+  {
+    value: '英語',
+    label: '英語',
+  },
+  {
+    value: '理科',
+    label: '理科',
+  },
+  {
+    value: '社会',
+    label: '社会',
+  },
+];
 
 export default function SchoolForm() {
   const { formValues, handleChange, handleNext, handleBack} = React.useContext(AppContext);
   const { school, subject, years, position } = formValues;
-  const { status, data: user} = useUser();
-  const db = useFirestore();
 
   const handleSubmit = () => {
     let form = {}
@@ -27,27 +107,6 @@ export default function SchoolForm() {
       return form
     })
 
-    /*setDoc(doc(db, 'teacher', user!.uid as string), {
-      schoolRef: formValues.school.value,
-      workYr: formValues.years.value,
-      subject: formValues.subject.value,
-      position: formValues.position.value,
-    }, {
-      merge: true
-    });*/
-
-    // console.log("test");
-    // const ref = doc(db, 'school/国際情報工科自動車大学校/');
-    // const ref2 = collection(ref, 'teacher');
-    // console.log(ref2);
-    // console.log("here");
-
-    /*addDoc(ref2, {
-      name: formValues.firstName.value
-    });*/
-    // setDoc(doc(db, 'school/国際情報工科自動車大学校/teachers', user!.uid), {
-    //   name: formValues.firstName.value
-    // });
     handleNext();
   };
 
@@ -61,7 +120,7 @@ export default function SchoolForm() {
   )
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         在籍情報
       </Typography>
@@ -78,8 +137,16 @@ export default function SchoolForm() {
         error={!!school.error}
         autoComplete="firstName"
         autoFocus
+        select
         onChange={handleChange}
-      />
+        defaultValue="仙台城南高等学校"
+      >
+        {schools.map((school) => (
+            <MenuItem key={school.value} value={school.value}>
+              {school.label}
+            </MenuItem>
+          ))}
+      </TextField>
       <TextField
         variant="outlined"
         margin="normal"
@@ -89,10 +156,18 @@ export default function SchoolForm() {
         label='教科'
         placeholder="国語"
         id="subject"
+        select
+        defaultValue="国語"
         onChange={handleChange}
         value={subject.value}
         error={!!subject.error}
-      />
+      >
+        {subjects.map((subject) => (
+            <MenuItem key={subject.value} value={subject.value}>
+              {subject.label}
+            </MenuItem>
+          ))}
+      </TextField>
       <TextField
         fullWidth
         select
@@ -142,8 +217,6 @@ export default function SchoolForm() {
           次へ
         </Button>
       </Box>
-    </React.Fragment>
+    </>
   );
 }
-
-// https://zenn.dev/isosa/articles/037ed47ee3dfe5

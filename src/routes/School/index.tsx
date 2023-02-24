@@ -1,10 +1,11 @@
-import { Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Stack, Typography, Button } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 import Enroll from './Enroll'
 import Club from './Club'
 import MainFeaturedPost from './MainFeaturedPost'
+
+import { useNavigate } from 'react-router-dom';
 
 const mainFeaturedPost = {
   image: 'https://seiryojoho-h.fcs.ed.jp/wysiwyg/image/download/1/1/',
@@ -13,11 +14,20 @@ const mainFeaturedPost = {
 
 const School = () => {
   const theme = useTheme()
+  const navigate = useNavigate();
 
   return (
     <>
+      <Button
+            type="button"
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={() => navigate("../dashboard")}>
+            ダッシュボードに戻る
+          </Button>
       <MainFeaturedPost post={mainFeaturedPost} />
-      <div >
+      <div>
           <Stack direction="row" spacing={2}>
             <Typography>学校名</Typography>
             <Typography>福島県立清陵情報高等学校</Typography>
@@ -49,6 +59,13 @@ const School = () => {
           <Typography>在校生徒(2022年)</Typography>
           <Enroll/>
           <Club />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("./edit")}>
+            編集
+          </Button>
         </div>
     </>
   )

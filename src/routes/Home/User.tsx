@@ -23,7 +23,6 @@ const User = () => {
   const navigate = useNavigate();
 
   async function fetchReviews() {
-    // setUser(await (await getDoc(docRef)).get("name"));
     const docSnap = await getDoc(docRef);
     setUser(await docSnap.get("name"));
 
@@ -31,26 +30,14 @@ const User = () => {
     setWorkYr(await docSnap.get("workYr"))
     setSubject(await docSnap.get("subject"))
 
-    // console.log(user);
     
-    // console.log(docRef);
-    
-    // console.log(school);
-    // console.log(workYr);
-    // console.log(subject);
-
     const q = query(collection(firestore, "reviews"), 
       where("teacherRef", "==", docRef),
       orderBy("posted", "desc"));
-    // console.log(q);
 
     const querySnapshot = await getDocs(q);
-    // console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
       setReviews((prevState) => [...prevState, doc]);
-      // console.log(doc.id, " => ", doc.data());
-      console.log(doc.data());
-      
     });
   }
 

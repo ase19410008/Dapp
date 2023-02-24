@@ -1,16 +1,15 @@
-import React, { useContext } from 'react'
-import Box from '@mui/material/Box'
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import Typography from '@mui/material/Typography'
+import { useContext } from 'react'
+import {Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Typography } from '@mui/material/'
 import AccountForm from './AccountForm'
 import PersonalForm from './PersonalForm'
 import SchoolForm from './SchoolForm'
 import { AppContext } from '../../Context'
 import Home from '../Home/Home'
 
-// Step titles
 const labels = ['アカウント', '基本情報', '在籍情報']
 const handleSteps = (step: number) => {
   switch (step) {

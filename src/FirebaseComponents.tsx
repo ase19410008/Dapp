@@ -17,14 +17,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from '@firebase/storage';
 
 export function FirebaseComponents({ children }: any ): ReactElement {
-  const app = useFirebaseApp(); // a parent component contains a `FirebaseAppProvider`
+  const app = useFirebaseApp();
 
-  // initialize Firestore and Auth with the normal Firebase SDK functions
   const firestore = getFirestore(app);
   const auth = getAuth(app);
   const storage = getStorage(app);
 
-  // any child components will be able to use `useUser`, `useDatabaseObjectData`, etc
   return (
     <AuthProvider sdk={auth}>
       <FirestoreProvider sdk={firestore}>

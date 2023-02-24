@@ -1,21 +1,28 @@
-import React, { useCallback, useContext, useState } from 'react'
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import Button from '@mui/material/Button';
+import { useCallback, useContext, useState } from 'react'
+import {
+  Typography,
+  Box,
+  TextField,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Button,
+  Stack
+} from '@mui/material';
 import { AppContext } from '../../Context';
 import { doc, setDoc } from '@firebase/firestore';
 import { ref, uploadBytes } from '@firebase/storage';
 import { useFirestore, useStorage, useUser } from 'reactfire';
-import { file } from '@babel/types';
+
+import moment, { Moment } from 'moment';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 export default function PersonalForm() {
-  const { formValues, handleChange, handleNext, handleBack } = React.useContext(AppContext);
+  const { formValues, handleChange, handleNext, handleBack } = useContext(AppContext);
   const { firstName, dob, gender } = formValues;
   const { status, data: user} = useUser();
   const storage = useStorage();
@@ -34,12 +41,6 @@ export default function PersonalForm() {
       return form
     })
 
-    // setDoc(doc(db, 'teacher', user!.uid as string), {
-    //   name: formValues.firstName.value,
-    //   dob: formValues.dob.value,
-    //   gender: formValues.gender.value
-    // });
-
     handleNext();
   };
 
@@ -54,13 +55,29 @@ export default function PersonalForm() {
 
   const fileUpload = async (e:React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
-    const storageRef = ref(storage, 'images/' + file.name);
+    /*const storageRef = ref(storage, 'images/' + file.name);
 
-    uploadBytes(storageRef, file);
+    uploadBytes(storageRef, file);*/
   }
 
+  const [date, setDate] = useState<Date | null>(null);
+
+  const handlePicker = (newValue: Date | null) => {
+    setDate(newValue);
+  };
+
+
   return (
-    <React.Fragment>
+    <>
+       <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+          <Box component="form" onSubmit={handleNext} sx={{ mt: 1 }}></Box>
       <Typography variant="h6" gutterBottom>
         基本情報
       </Typography>
@@ -68,7 +85,6 @@ export default function PersonalForm() {
         variant="outlined"
         margin="normal"
         required
-        fullWidth
         id="firstName"
         label='氏名'
         placeholder="佐久間　雄大"
@@ -79,19 +95,17 @@ export default function PersonalForm() {
         autoFocus
         onChange={handleChange}
       />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        name="dob"
-        label='生年月日'
-        placeholder="2000/08/28"
-        id="dob"
-        onChange={handleChange}
-        value={dob.value}
-        error={!!dob.error}
-      />
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <Stack spacing={1}>
+          <DesktopDatePicker
+            label="生年月日"
+            inputFormat="YYYY/MM/DD"
+            value={date}
+            onChange={handlePicker}
+            renderInput={(params) => <TextField {...params} />}
+          />
+          </Stack>
+        </LocalizationProvider>
       <FormControl>
         <FormLabel id="demo-row-radio-buttons-group-label">性別</FormLabel>
           <RadioGroup
@@ -111,7 +125,7 @@ export default function PersonalForm() {
         onChange={fileUpload}
         />
       </Button>
-
+      </Box>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Button
           variant='contained'
@@ -132,6 +146,6 @@ export default function PersonalForm() {
           次へ
         </Button>
       </Box>
-    </React.Fragment>
+    </>
   );
 }

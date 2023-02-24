@@ -10,7 +10,6 @@ import Edit from "./School/Edit";
 import DashBoard from "./DashBoard/DashBoard";
 import Home from "./Home/Home";
 import User from "./Home/User";
-import App from "../App";
 import Orders from "./DashBoard/Orders";
 import Customers from "./DashBoard/Customers";
 import Reports from "./DashBoard/Reports";

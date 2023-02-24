@@ -1,18 +1,12 @@
-import React, { useCallback, useContext } from 'react'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import { useCallback, useContext } from 'react'
+import {Box,
+  TextField,
+  Button } from '@mui/material'
 import { AppContext } from '../../Context'
-
-import { useAuth } from 'reactfire';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function AccountForm() {
   const { formValues, handleChange, handleNext } = useContext(AppContext)
   const { email, password } = formValues
-  
-  const auth = useAuth();
 
   const handleSubmit = () => {
     let form = {}
@@ -25,26 +19,6 @@ export default function AccountForm() {
       }
       return form
     })
-    // console.log(form);
-    
-    // console.log(formValues.email.value);
-    // console.log(formValues.password.value);
-    
-    // Do whatever with the values
-    // console.log(form.password);
-    /*createUserWithEmailAndPassword(auth, formValues.email.value, formValues.password.value)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        // console.log(user);
-        // user.uid
-      })
-      .catch((e) => {
-        const errorCode = e.code;
-        const errorMessage = e.message;
-
-        alert(errorCode + errorMessage);
-      });
-    */
     // Show last component or success message
     handleNext()
   }

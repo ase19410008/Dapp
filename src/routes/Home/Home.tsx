@@ -28,7 +28,6 @@ export default function Home() {
   const { param } = useParams();
   const isNest = param === undefined;
 
-  // const settings = ['プロフィール', 'アカウント', 'ダッシュボード', 'サインアウト'];
   const settings = ['サインアウト'];
 
   const firestore = useFirestore();
@@ -36,18 +35,11 @@ export default function Home() {
   const [reviews, setReviews] = useState<Array<QueryDocumentSnapshot<DocumentData>>>([]);
 
   async function fetchTeachers() {
-    // rev-cpコレクションの参照を引数に全ドキュメントを取得
     const querySnapshot = await getDocs(query(collection(firestore, 'reviews'), orderBy("posted", "desc")));
     querySnapshot.forEach(async (doc) => {
       setReviews((prevState) => [...prevState, doc]);
-      
-      // console.log(doc.id);
-      
       const teacher = await getDoc(doc.get("teacherRef")) as DocumentSnapshot<DocumentData> ;
       setTeachers((prevState) => [...prevState, teacher]);
-      // console.log(teacher);
-      // console.log(teacher.data());
-      // console.log(teacher.get("name"));
     })
   }
 
